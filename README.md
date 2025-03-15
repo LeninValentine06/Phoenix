@@ -1,7 +1,5 @@
 # LoRa-Based Real-Time Landslide Detection System
 
-![Landslide Detection System](https://placeholder.com/logo)
-
 ## 1. Project Overview
 
 ### The Problem
@@ -17,14 +15,14 @@ The LoRa-Based Real-Time Landslide Detection System provides an affordable, open
 - Provide immediate, multi-modal alerts to communities at risk
 - Operate for extended periods on battery power
 
-The system uses distributed sensor nodes placed in landslide-prone areas to continuously monitor ground movement, soil moisture, and environmental conditions. When potential landslide indicators are detected, the system triggers immediate alerts via multiple channels.
+The system uses distributed ESP32-based sensor nodes placed in landslide-prone areas to continuously monitor ground movement, soil moisture, and environmental conditions. When potential landslide indicators are detected, the system triggers immediate alerts via multiple channels.
 
 ## 2. System Architecture
 
 ### Hardware Components
 
-#### Sensor Node (Raspberry Pi Pico)
-- **Microcontroller**: Raspberry Pi Pico (RP2040)
+#### Sensor Node (ESP32)
+- **Microcontroller**: ESP32-WROOM-32
 - **Sensors**:
   - MPU6050 (3-axis accelerometer and gyroscope)
   - Capacitive soil moisture sensor
@@ -49,8 +47,8 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 ┌─────────────────┐     LoRa     ┌─────────────────┐     Alert     ┌─────────────────┐
 │                 │  Wireless    │                 │   Triggers    │                 │
 │   Sensor Node   │ ───────────► │   Master Node   │ ───────────► │  Alert Systems  │
-│  (Raspberry Pi  │    433MHz    │     (ESP32)     │               │   - Speaker     │
-│      Pico)      │              │                 │               │   - Display     │
+│     (ESP32)     │    433MHz    │     (ESP32)     │               │   - Speaker     │
+│                 │              │                 │               │   - Display     │
 │                 │              │                 │               │   - Mobile      │
 └─────────────────┘              └─────────────────┘               └─────────────────┘
         │                                 ▲
@@ -60,8 +58,8 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
                 (Multiple Nodes)
 ```
 
-1. **Data Collection**: The sensor nodes continuously monitor accelerometer data (ground movement), soil moisture levels, and environmental conditions.
-2. **Data Processing**: Initial data processing occurs on the Pico to identify concerning patterns before transmission.
+1. **Data Collection**: The ESP32 sensor nodes continuously monitor accelerometer data (ground movement), soil moisture levels, and environmental conditions.
+2. **Data Processing**: Initial data processing occurs on the sensor nodes to identify concerning patterns before transmission.
 3. **Data Transmission**: Processed data is transmitted via LoRa to the master node.
 4. **Alert Analysis**: The ESP32 master node analyzes data from multiple sensor nodes and determines if alert thresholds are exceeded.
 5. **Alert Distribution**: When potential landslide conditions are detected, the master node activates local alerts and sends notifications to configured devices.
@@ -97,8 +95,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 ### Prerequisites
 
 #### Hardware Requirements
-- Raspberry Pi Pico (for sensor nodes)
-- ESP32 development board (for master node)
+- ESP32 development boards (for both sensor and master nodes)
 - MPU6050 accelerometer/gyroscope module
 - Soil moisture sensor (capacitive recommended)
 - DHT22/AM2302 temperature & humidity sensor
@@ -110,7 +107,6 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 
 #### Software Requirements
 - Arduino IDE (for ESP32 programming)
-- MicroPython (for Raspberry Pi Pico)
 - Required libraries (included in the repository):
   - RadioHead library for LoRa communication
   - Adafruit MPU6050 library
@@ -121,36 +117,37 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 
 1. **Hardware Assembly**
 
-   Connect the components to the Raspberry Pi Pico according to this pinout:
+   Connect the components to the ESP32 according to this pinout:
    
    ```
-   Raspberry Pi Pico     |     Component
+   ESP32 (Sensor Node)   |     Component
    ------------------------------------
-   GP4 (SDA)            ---    MPU6050 SDA
-   GP5 (SCL)            ---    MPU6050 SCL
-   GP26 (ADC0)          ---    Soil Moisture Sensor
-   GP22                 ---    DHT22 Data
-   GP10 (SPI1 SCK)      ---    RA-02 SCK
-   GP11 (SPI1 TX)       ---    RA-02 MOSI
-   GP12 (SPI1 RX)       ---    RA-02 MISO
-   GP13                 ---    RA-02 CS
-   GP14                 ---    RA-02 RST
-   GP15                 ---    RA-02 DIO0
-   VSYS                 ---    Battery + (via switch)
+   GPIO21 (SDA)         ---    MPU6050 SDA
+   GPIO22 (SCL)         ---    MPU6050 SCL
+   GPIO36 (ADC0)        ---    Soil Moisture Sensor
+   GPIO17               ---    DHT22 Data
+   GPIO5 (SCK)          ---    RA-02 SCK
+   GPIO23 (MOSI)        ---    RA-02 MOSI
+   GPIO19 (MISO)        ---    RA-02 MISO
+   GPIO18               ---    RA-02 CS
+   GPIO14               ---    RA-02 RST
+   GPIO26               ---    RA-02 DIO0
+   5V                   ---    Battery + (via switch)
    GND                  ---    Common ground
    ```
 
 2. **Software Installation**
 
-   a. Install MicroPython on the Raspberry Pi Pico:
-   - Download the latest MicroPython UF2 file from the official website
-   - Connect Pico while holding BOOTSEL button
-   - Copy the UF2 file to the mounted drive
+   a. Setup Arduino IDE for ESP32:
+   - Add ESP32 board support to Arduino IDE
+   - Install required libraries through the Library Manager
 
    b. Upload the sensor node code:
    - Clone this repository: `git clone https://github.com/LeninValentine06/lora-landslide-detection.git`
    - Navigate to the `sensor_node` directory
-   - Upload all `.py` files to the Pico using your preferred method (e.g., Thonny IDE)
+   - Open the `sensor_node.ino` file
+   - Select your ESP32 board model and port
+   - Compile and upload the code
 
 ### Master Node Setup
 
@@ -159,22 +156,22 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
    Connect the components to the ESP32 according to this pinout:
    
    ```
-   ESP32                |     Component
+   ESP32 (Master Node)   |     Component
    ------------------------------------
-   GPIO5 (SCK)         ---    RA-02 SCK
-   GPIO23 (MOSI)       ---    RA-02 MOSI
-   GPIO19 (MISO)       ---    RA-02 MISO
-   GPIO18              ---    RA-02 CS
-   GPIO14              ---    RA-02 RST
-   GPIO26              ---    RA-02 DIO0
-   GPIO25              ---    Speaker +
-   GPIO21 (SDA)        ---    Display SDA
-   GPIO22 (SCL)        ---    Display SCL
-   GPIO2               ---    Display DC
-   GPIO4               ---    Display CS
-   GPIO15              ---    Display RST
-   5V                  ---    Power input
-   GND                 ---    Common ground
+   GPIO5 (SCK)          ---    RA-02 SCK
+   GPIO23 (MOSI)        ---    RA-02 MOSI
+   GPIO19 (MISO)        ---    RA-02 MISO
+   GPIO18               ---    RA-02 CS
+   GPIO14               ---    RA-02 RST
+   GPIO26               ---    RA-02 DIO0
+   GPIO25               ---    Speaker +
+   GPIO21 (SDA)         ---    Display SDA
+   GPIO22 (SCL)         ---    Display SCL
+   GPIO2                ---    Display DC
+   GPIO4                ---    Display CS
+   GPIO15               ---    Display RST
+   5V                   ---    Power input
+   GND                  ---    Common ground
    ```
 
 2. **Software Installation**
