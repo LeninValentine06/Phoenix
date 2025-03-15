@@ -1,5 +1,5 @@
 # LoRa-Based Real-Time Landslide Detection System
-   ![Slave Node PCB Design](https://github.com/username/repository-name/raw/branch-name/misc/your-image.jpg)
+   ![Slave Node PCB Design](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Slave_Node.jpg)
 ## 1. Project Overview
 
 ### The Problem
