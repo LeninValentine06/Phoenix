@@ -1,7 +1,7 @@
 # LoRa-Based Real-Time Landslide Detection System
    ![Slave Node PCB Design](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Slave_Node.jpg)
 
-   ![Master Node PCB Design](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Slave_Node.jpg)
+   ![Master Node PCB Design](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Master_Node.jpg)
 ## 1. Project Overview
 
 ### The Problem
@@ -137,7 +137,7 @@ The system uses distributed ESP32-based sensor nodes placed in landslide-prone a
    5V                   ---    Battery + (via switch)
    GND                  ---    Common ground
    ```
-
+![Slave Node Serial Monitor Output](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Slave-SerialMonitor.png)
 2. **Software Installation**
 
    a. Setup Arduino IDE for ESP32:
@@ -175,7 +175,7 @@ The system uses distributed ESP32-based sensor nodes placed in landslide-prone a
    5V                   ---    Power input
    GND                  ---    Common ground
    ```
-
+![Master Node Serial Monitor Output](https://github.com/LeninValentine06/Phoenix/blob/main/misc/Master_SerialMonitor.jpg)
 2. **Software Installation**
 
    a. Setup Arduino IDE for ESP32:
