@@ -29,7 +29,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
   - MPU6050 (3-axis accelerometer and gyroscope)
   - Capacitive soil moisture sensor
   - DHT22/AM2302 temperature and humidity sensor
-- **Communication**: RFM95W LoRa transceiver module
+- **Communication**: LoRa RA-02 module (433MHz)
 - **Power**: 3.7V LiPo battery with solar charging capability
 
 #### Master Node (ESP32)
@@ -39,7 +39,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
   - 2.8" ILI9341 TFT display for visual alerts and status
   - Optional GSM module for SMS alerts
 - **Communication**:
-  - RFM95W LoRa transceiver (for sensor node communication)
+  - LoRa RA-02 module (433MHz)
   - WiFi/Bluetooth (for configuration and notifications)
 - **Power**: 5V DC power supply with battery backup
 
@@ -49,7 +49,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 ┌─────────────────┐     LoRa     ┌─────────────────┐     Alert     ┌─────────────────┐
 │                 │  Wireless    │                 │   Triggers    │                 │
 │   Sensor Node   │ ───────────► │   Master Node   │ ───────────► │  Alert Systems  │
-│  (Raspberry Pi  │  915/868MHz  │     (ESP32)     │               │   - Speaker     │
+│  (Raspberry Pi  │    433MHz    │     (ESP32)     │               │   - Speaker     │
 │      Pico)      │              │                 │               │   - Display     │
 │                 │              │                 │               │   - Mobile      │
 └─────────────────┘              └─────────────────┘               └─────────────────┘
@@ -75,7 +75,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 - Local data processing to detect movement patterns indicative of landslides
 
 ### Long-Range, Low-Power Communication
-- LoRa communication with 5-15km range (depending on terrain)
+- LoRa communication with 3-10km range (depending on terrain) using 433MHz frequency
 - Optimized data packets to minimize transmission power
 - Node power management for extended battery life (3-6 months on a single charge with solar support)
 - Reliable mesh networking capabilities between multiple sensor nodes
@@ -102,7 +102,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
 - MPU6050 accelerometer/gyroscope module
 - Soil moisture sensor (capacitive recommended)
 - DHT22/AM2302 temperature & humidity sensor
-- RFM95W LoRa modules (915MHz or 868MHz depending on your region)
+- LoRa RA-02 modules (433MHz)
 - 2.8" ILI9341 TFT display
 - 9V speaker/buzzer
 - 3.7V LiPo batteries with solar charging modules
@@ -130,12 +130,12 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
    GP5 (SCL)            ---    MPU6050 SCL
    GP26 (ADC0)          ---    Soil Moisture Sensor
    GP22                 ---    DHT22 Data
-   GP10 (SPI1 SCK)      ---    RFM95W SCK
-   GP11 (SPI1 TX)       ---    RFM95W MOSI
-   GP12 (SPI1 RX)       ---    RFM95W MISO
-   GP13                 ---    RFM95W CS
-   GP14                 ---    RFM95W RST
-   GP15                 ---    RFM95W IRQ
+   GP10 (SPI1 SCK)      ---    RA-02 SCK
+   GP11 (SPI1 TX)       ---    RA-02 MOSI
+   GP12 (SPI1 RX)       ---    RA-02 MISO
+   GP13                 ---    RA-02 CS
+   GP14                 ---    RA-02 RST
+   GP15                 ---    RA-02 DIO0
    VSYS                 ---    Battery + (via switch)
    GND                  ---    Common ground
    ```
@@ -161,12 +161,12 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
    ```
    ESP32                |     Component
    ------------------------------------
-   GPIO5 (SCK)         ---    RFM95W SCK
-   GPIO23 (MOSI)       ---    RFM95W MOSI
-   GPIO19 (MISO)       ---    RFM95W MISO
-   GPIO18              ---    RFM95W CS
-   GPIO14              ---    RFM95W RST
-   GPIO26              ---    RFM95W IRQ
+   GPIO5 (SCK)         ---    RA-02 SCK
+   GPIO23 (MOSI)       ---    RA-02 MOSI
+   GPIO19 (MISO)       ---    RA-02 MISO
+   GPIO18              ---    RA-02 CS
+   GPIO14              ---    RA-02 RST
+   GPIO26              ---    RA-02 DIO0
    GPIO25              ---    Speaker +
    GPIO21 (SDA)        ---    Display SDA
    GPIO22 (SCL)        ---    Display SCL
