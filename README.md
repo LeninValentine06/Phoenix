@@ -148,7 +148,7 @@ The system uses distributed sensor nodes placed in landslide-prone areas to cont
    - Copy the UF2 file to the mounted drive
 
    b. Upload the sensor node code:
-   - Clone this repository: `git clone https://github.com/yourusername/lora-landslide-detection.git`
+   - Clone this repository: `git clone https://github.com/LeninValentine06/lora-landslide-detection.git`
    - Navigate to the `sensor_node` directory
    - Upload all `.py` files to the Pico using your preferred method (e.g., Thonny IDE)
 
