@@ -280,12 +280,6 @@ This project is licensed under the Creative Commons Zero v1.0 Universal License 
 
 This means you can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
 
-## 8. Acknowledgments
-
-- Thanks to the organizers of the Social Impact Hackathon for their support
-- Special thanks to the communities who provided testing grounds and feedback
-- Gratitude to all contributors and team members who made this project possible
-- This project builds upon research and designs from numerous open-source projects in the disaster prevention community
 
 ---
 
